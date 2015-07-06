@@ -1,0 +1,135 @@
+<!doctype html>
+<html class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <title>fortone</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+</head>
+
+<body>
+    <!--[if lt IE 10]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <div id="main" style="height:400px"></div>
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/modernizr/modernizr.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/echarts/build/dist/echarts.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:js({app,.tmp}) scripts/main.js -->
+    <script src="scripts/main.js"></script>
+    <!-- endbuild -->
+    <script>
+    require.config({
+        paths: {
+            echarts: 'bower_components/echarts/build/dist'
+        }
+    });
+    // 使用
+    require(
+        [
+            'echarts',
+            'echarts/chart/bar', // 使用柱状图就加载bar模块，按需加载
+            'echarts/chart/line',
+        ],
+        function(ec) {
+            // 基于准备好的dom，初始化echarts图表
+            var myChart = ec.init(document.getElementById('main'));
+
+            option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: ['最高', '最低']
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: {
+                            show: true
+                        },
+                        dataZoom: {
+                            show: true
+                        },
+                        dataView: {
+                            show: true
+                        },
+                        magicType: {
+                            show: true,
+                            type: ['line', 'bar']
+                        },
+                        restore: {
+                            show: true
+                        },
+                        saveAsImage: {
+                            show: true
+                        }
+                    }
+                },
+                calculable: true,
+                dataZoom: {
+                    show: true,
+                    realtime: true,
+                    start: 20,
+                    end: 80
+                },
+                xAxis: [{
+                    type: 'category',
+                    boundaryGap: false,
+                    data: function() {
+                        var list = [];
+                        for (var i = 1; i <= 30; i++) {
+                            list.push('2013-03-' + i);
+                        }
+                        return list;
+                    }()
+                }],
+                yAxis: [{
+                    type: 'value'
+                }],
+                series: [{
+                    name: '最高',
+                    type: 'line',
+                    data: function() {
+                        var list = [];
+                        for (var i = 1; i <= 30; i++) {
+                            list.push(Math.round(Math.random() * 30));
+                        }
+                        return list;
+                    }()
+                }, {
+                    name: '最低',
+                    type: 'line',
+                    data: function() {
+                        var list = [];
+                        for (var i = 1; i <= 30; i++) {
+                            list.push(Math.round(Math.random() * 10));
+                        }
+                        return list;
+                    }()
+                }]
+            };
+
+
+            // 为echarts对象加载数据 
+            myChart.setOption(option);
+        }
+    );
+    </script>
+</body>
+
+</html>
