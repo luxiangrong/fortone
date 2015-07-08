@@ -10,6 +10,7 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/normalize-css/normalize.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -18,20 +19,95 @@
 </head>
 
 <body>
-    <!--[if lt IE 10]>
+    <!--[if lt IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <div id="main-chart"></div>
+    <div class="container">
+        <h1 class="page-title">
+            <img src="images/pic01.png" height="20" width="168" alt="">
+            <p>历史绩效图</p>
+        </h1>
+        <div class="row clearfix l-b">
+            <div class="col-3 col-jingzhi">
+                <div class="l1">
+                    <strong class="r-b">今日净值</strong>
+                    <span class="date">2015-3-16</span>
+                </div>
+                <div class="l2">
+                    <img src="images/pic03.png" height="33" width="39" alt="">
+                    <span class="jingzhi">15.7575</span>
+                </div>
+            </div>
+            <div class="col-9 col-normal">
+                <div class="col-4 l-b ">
+                    <div class="l1">
+                        <strong>当年收益：</strong>
+                        <span>46.39%</span>
+                    </div>
+                    <div class="l2">
+                        <strong>近一年最大回撤：</strong>
+                        <span>-11.56%</span>
+                    </div>
+                </div>
+                <div class="col-4 l-b ">
+                    <div class="l1">
+                        <strong>当月收益：</strong>
+                        <span>-0.17</span>
+                    </div>
+                    <div class="l2">
+                        <strong>总收益：</strong>
+                        <span>1475.75%</span>
+                    </div>
+                </div>
+                <div class="col-4 l-b ">
+                    <div class="l1">
+                        <strong>当日收益：</strong>
+                        <span>1.42%</span>
+                    </div>
+                    <div class="l2">
+                        <strong>夏普比率：</strong>
+                        <span>1.7534</span>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="hr-1"></div>
+            <div class="hr-2"></div>
+            <div class="clearfix"></div>
+            <div class="tools">
+                <span>显示：</span>
+                <label><input type="radio" value="week" name="range" /><span>一周</span></label>
+                <label><input type="radio" value="month" name="range" /><span>一个月</span></label>
+                <label><input type="radio" value="year" name="range" /><span>一年</span></label>
+                <label><input type="radio" value="all" name="range" /><span>全部</span></label>
+                <span class="l-b">对比：</span>
+                <label><input type="checkbox" /><span>上证指数</span></label>
+                <label><input type="checkbox" /><span>标普500指数</span></label>
+                <span class="l-b">显示区间：2015-02-09至2015-03-16</span>
+            </div>
+        </div>
+        <div id="main-chart"></div>
+    </div>
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/modernizr/modernizr.js"></script>
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/echarts/build/dist/echarts.js"></script>
+    <script src="bower_components/iCheck/icheck.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:js({app,.tmp}) scripts/main.js -->
     <script src="scripts/main.js"></script>
     <!-- endbuild -->
+    <script>
+    $(document).ready(function() {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_polaris',
+            radioClass: 'iradio_polaris',
+            increaseArea: '-10%' // optional
+        });
+    });
+    </script>
 </body>
 
 </html>

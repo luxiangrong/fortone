@@ -1,14 +1,237 @@
 // bower:scss
 // endbower
+* {
+    box-sizing: border-box;
+}
+
+*:before,
+*:after {
+    box-sizing: border-box;
+}
 
 body {
-  background: #fafafa;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #333;
+    background: #fafafa;
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Hiragino Sans GB W3", "Microsoft YaHei", Arial, sans-serif;
+    color: #353535;
+    background-color: #eeeeee;
+    font-size: 14px;
 }
 
 #main-chart {
-  background: url(../images/chart_bg.png) no-repeat center center;
-  width: 884px;
-  height: 393px;
+    background: url(../images/chart_bg.png) no-repeat center center;
+    width: 884px;
+    height: 393px;
+    margin-top: 30px;
+}
+
+.container {
+    width: 884px;
+    margin: 0 auto;
+}
+
+h1.page-title {
+    text-align: center;
+    font-weight: normal;
+    p {
+        font-size: 23px;
+    }
+}
+
+.row {}
+
+.r-b {
+    background: url(../images/pic02.png) right center no-repeat;
+    padding-right: 10px;
+    display: inline-block;
+    font-weight: normal;
+}
+
+.l-b {
+    border-left: 1px solid #dcdcdc;
+    padding-left: 10px;
+}
+
+.b-b {
+    border-bottom: 1px solid #dcdcdc;
+    padding-bottom: 10px;
+}
+
+.clearfix {
+    &:before, &:after {
+        content: " "; // 1
+        display: table; // 2
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+.col-3 {
+    float: left;
+    width: 25%;
+}
+
+.col-9 {
+    float: left;
+    width: 75%;
+}
+
+.l1 {
+    margin-bottom: 15px;
+}
+
+.l2 {
+    margin-top: 15px;
+}
+
+.col-4 {
+    float: left;
+    width: 33.333%;
+}
+
+.col-jingzhi {
+    padding-left: 20px;
+    padding-right: 20px;
+    .r-b {
+        margin-right: 20px;
+    }
+    .date {
+        color: #767676;
+    }
+    .jingzhi {
+        font-size: 28px;
+        color: #e60010;
+        margin-left: 30px;
+    }
+    .l1 {
+        margin-bottom: 0px;
+    }
+    .l2 {
+        margin-top: 0px;
+    }
+    strong {
+        font-weight: normal;
+        color: #000;
+    }
+    span {
+        color: #767676;
+    }
+}
+
+.col-normal {
+    strong {
+        font-weight: normal;
+        color: #000;
+    }
+    span {
+        color: #767676;
+    }
+}
+
+.hr-1 {
+    margin: 0 20px;
+    border-bottom: 1px solid #dcdcdc;
+    width: 20%;
+    margin-top: 20px;
+    float: left;
+}
+
+.hr-2 {
+    margin: 0 20px;
+    border-bottom: 1px solid #dcdcdc;
+    width: 70%;
+    margin-top: 20px;
+    float: left;
+}
+
+.tools {
+    border-bottom: 1px solid #dcdcdc;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    margin-right: 20px;
+    span {
+        position: relative;
+        top: 1px;
+    }
+    label {
+        span {
+            margin-top: 2px;
+            position: relative;
+            top: 2px;
+        }
+    }
+    .l-b {
+      margin-left: 20px;
+    }
+}
+/* iCheck plugin Polaris skin
+----------------------------------- */
+
+.icheckbox_polaris,
+.iradio_polaris {
+    display: inline-block;
+    *display: inline;
+    vertical-align: middle;
+    margin: 0;
+    padding: 0;
+    width: 29px;
+    height: 29px;
+    background: url(../images/polaris.png) no-repeat;
+    border: none;
+    cursor: pointer;
+}
+
+.icheckbox_polaris {
+    background-position: 0 0;
+}
+
+.icheckbox_polaris.hover {
+    background-position: -31px 0;
+}
+
+.icheckbox_polaris.checked {
+    background-position: -62px 0;
+}
+
+.icheckbox_polaris.disabled {
+    background-position: -93px 0;
+    cursor: default;
+}
+
+.icheckbox_polaris.checked.disabled {
+    background-position: -124px 0;
+}
+
+.iradio_polaris {
+    background-position: -155px 0;
+}
+
+.iradio_polaris.hover {
+    background-position: -186px 0;
+}
+
+.iradio_polaris.checked {
+    background-position: -217px 0;
+}
+
+.iradio_polaris.disabled {
+    background-position: -248px 0;
+    cursor: default;
+}
+
+.iradio_polaris.checked.disabled {
+    background-position: -279px 0;
+}
+/* HiDPI support */
+
+@media (-o-min-device-pixel-ratio: 5/4),
+(-webkit-min-device-pixel-ratio: 1.25),
+(min-resolution: 120dpi) {
+    .icheckbox_polaris,
+    .iradio_polaris {
+        background-image: url(../images/polaris@2x.png);
+        -webkit-background-size: 310px 31px;
+        background-size: 310px 31px;
+    }
 }
