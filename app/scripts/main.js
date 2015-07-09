@@ -18,7 +18,25 @@ require(
         var option = {
             tooltip: {
                 trigger: 'axis',
-                showDelay: 0
+                showDelay: 0,
+                axisPointer: {
+                    type: 'line',
+                    lineStyle: {
+                        color: '#48b',
+                        width: 2,
+                        type: 'solid'
+                    },
+                    crossStyle: {
+                        color: '#1e90ff',
+                        width: 1,
+                        type: 'dashed'
+                    },
+                    shadowStyle: {
+                        color: 'rgba(150,150,150,0.3)',
+                        width: 'auto',
+                        type: 'default'
+                    }
+                }
             },
             legend: {
                 show: false,
@@ -350,7 +368,7 @@ require(
             xAxisData[i] = [];
             stoped[i] = 0;
             (function(i) {
-                $.getJSON(i + '.json', function(data) {
+                $.getJSON(i + '.html', function(data) {
                     stoped[i] = 1;
                     $.each(data.sktq, function(i2, item) {
                         xAxisData[i].push(item[0]);
@@ -404,27 +422,28 @@ require(
 
 
                 myChart.hideLoading();
+                option.dataZoom.start = (1 - 22 / option.series[0].data.length) * 100;
                 myChart.setOption(option);
 
             }
         }, 1000);
 
 
-        $('[name="range"]').on('ifChecked', function(){
+        $('[name="range"]').on('ifChecked', function() {
             var range = $(this).val();
-            switch(range) {
+            switch (range) {
                 case 'week':
-                    option.dataZoom.start = (1 - 7 / option.series[0].data.length ) * 100;
+                    option.dataZoom.start = (1 - 7 / option.series[0].data.length) * 100;
                     myChart.clear();
                     myChart.setOption(option);
                     break;
                 case 'month':
-                    option.dataZoom.start = (1 - 22 / option.series[0].data.length ) * 100;
+                    option.dataZoom.start = (1 - 22 / option.series[0].data.length) * 100;
                     myChart.clear();
                     myChart.setOption(option);
                     break;
                 case 'year':
-                    option.dataZoom.start = (1 - 260 / option.series[0].data.length ) * 100;
+                    option.dataZoom.start = (1 - 260 / option.series[0].data.length) * 100;
                     myChart.clear();
                     myChart.setOption(option);
                     break;

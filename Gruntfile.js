@@ -354,6 +354,7 @@ module.exports = function (grunt) {
             'images/*.mp3',
             'images/*.svg',
             '{,*/}*.html',
+            '{,*/}*.json',
             'styles/fonts/{,*/}*.*'
           ]
         }, {
