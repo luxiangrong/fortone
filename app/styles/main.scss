@@ -21,7 +21,7 @@ body {
     background: url(../images/chart_bg.png) no-repeat center center;
     width: 884px;
     height: 393px;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 .container {
@@ -162,7 +162,47 @@ h1.page-title {
         }
     }
     .l-b {
-      margin-left: 15px;
+        margin-left: 15px;
+    }
+}
+
+.chart-wrap {
+    position: relative;
+    .title-1, .title-2 {
+        position: absolute;
+    }
+    .title-1 {
+        left: 50%;
+        margin-left: -143px;
+        top: 20px;
+    }
+    .title-2 {
+        left: 30px;
+        top: 50%;
+        margin-top: -62px;
+    }
+}
+
+.tooltip {
+    text-align: right;
+    font-size: 14px;
+    margin-top: 20px;
+    span {
+        display: inline-block;
+        &.date {
+            margin-right: 10px;
+        }
+        &.jingzhi {
+            text-align: left;
+            color: #df000d;
+            width: 13em;
+        }
+        &.shangzheng {
+            color: #192893;
+        }
+        &.biaopu {
+            color: #592305;
+        }
     }
 }
 /* iCheck plugin Polaris skin

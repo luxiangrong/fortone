@@ -25,25 +25,37 @@ require(
                         color: '#48b',
                         width: 2,
                         type: 'solid'
-                    },
-                    crossStyle: {
-                        color: '#1e90ff',
-                        width: 1,
-                        type: 'dashed'
-                    },
-                    shadowStyle: {
-                        color: 'rgba(150,150,150,0.3)',
-                        width: 'auto',
-                        type: 'default'
                     }
+                },
+                showContent: false,
+                formatter: function(params, ticket, callback) {
+                    // console.log(params)
+                    $.each(params, function(i, param){
+                        $('.tooltip .date').text(param.name);
+                        switch(param.seriesName) {
+                            case '净值':
+                                var currentVal = Number(param.data);
+                                var currentIndex = param.dataIndex;
+                                if(currentIndex == 0) {
+                                    var lastVal = currentVal;
+                                } else {
+                                    var lastVal = Number(param.series.data[currentIndex - 1]);
+                                }
+                                $('.tooltip .jingzhi').text('净值：' + currentVal + '（ ' + ((currentVal - lastVal) / lastVal * 100).toFixed(2) + '% ）');
+                                break;
+                        }
+                    });
+                    return '';
                 }
             },
             legend: {
                 show: false,
-                data: ['净值', '上证指数', '标普500']
+                data: ['净值']
             },
             grid: {
-                borderWidth: 0
+                borderWidth: 0,
+                y1: 40,
+                y2: 80
             },
             toolbox: {
                 show: false,
@@ -73,7 +85,7 @@ require(
                 realtime: true,
                 //orient: 'vertical',   // 'horizontal'
                 //x: 0,
-                y: 370,
+                y: 350,
                 //width: 400,
                 height: 16,
                 backgroundColor: 'rgba(0,0,0,0.7)',
@@ -90,6 +102,7 @@ require(
                 })(),
                 fillerColor: 'rgba(159,195,70,0.5)',
                 handleColor: 'rgba(159,195,70,0.9)',
+                handleSize: 8,
 
                 //xAxisIndex:[],
                 //yAxisIndex:[],
@@ -99,14 +112,14 @@ require(
             xAxis: [{
                 type: 'category',
                 position: 'bottom',
-                boundaryGap: true,
+                boundaryGap: false,
                 axisLine: { // 轴线
                     show: true,
                     lineStyle: {
                         color: (function() {
                             var zrColor = require('zrender/tool/color');
                             return zrColor.getLinearGradient(
-                                0, 310, 0, 360, [
+                                0, 290, 0, 340, [
                                     [0, 'rgba(0,0,0,1)'],
                                     [0.4999, 'rgba(0,0,0,1)'],
                                     [0.5, 'rgba(77,77,77,1)'],
@@ -134,7 +147,7 @@ require(
                         if (value == null) {
                             return '';
                         }
-                        return value.split('-')[0] + '月' + value.split('-')[1] + '日';
+                        return value.split('-')[1] + '月' + value.split('-')[2] + '日';
                     },
                     textStyle: {
                         color: '#6b8f1a',
@@ -167,17 +180,17 @@ require(
                 },
                 axisTick: { // 轴标记
                     show: true,
-                    length: 3,
+                    length: 4,
                     lineStyle: {
                         color: 'rgba(255,255,255,1)',
                         type: 'dotted',
-                        width: 3
+                        width: 4
                     }
                 },
                 axisLabel: {
                     show: true,
                     interval: 'auto',
-                    margin: 18,
+                    margin: 12,
                     formatter: function(value) {
                         return Number(value).toFixed(2);
                     },
@@ -199,102 +212,6 @@ require(
             }],
             series: [{
                 name: '净值',
-                type: 'line',
-                stack: '总量',
-                smooth: false,
-                symbol: 'none',
-                itemStyle: {
-                    normal: {
-                        label: {
-                            show: false,
-                            textStyle: {
-                                fontSize: '20',
-                                fontFamily: '微软雅黑',
-                                fontWeight: 'bold'
-                            }
-                        },
-                        areaStyle: {
-                            // 区域图，纵向渐变填充
-                            color: (function() {
-                                var zrColor = require('zrender/tool/color');
-                                return zrColor.getRadialGradient(442, 0, 100, 442, 50, 360, [
-                                    [0, 'rgba(126,154,167,0.75)'],
-                                    [1, 'rgba(60,62,69,0)']
-                                ])
-                            })()
-                        },
-                        lineStyle: { // 系列级个性化折线样式，横向渐变描边
-                            width: 2,
-                            color: (function() {
-                                var zrColor = require('zrender/tool/color');
-                                return zrColor.getLinearGradient(
-                                    0, 0, 884, 0, [
-                                        [0, 'rgba(134,168,58,0.8)'],
-                                        [0.25, 'rgba(163,202,76,0.8)'],
-                                        [0.5, 'rgba(200,228,240,0.8)'],
-                                        [0.75, 'rgba(221,233,247,0.8)'],
-                                        [1, 'rgba(79,100,110,0.8)']
-                                    ]
-                                )
-                            })(),
-                            shadowColor: 'rgba(0,0,0,0.5)',
-                            shadowBlur: 10,
-                            shadowOffsetX: 8,
-                            shadowOffsetY: 8
-                        }
-                    }
-                },
-                data: []
-            }, {
-                name: '上证指数',
-                type: 'line',
-                stack: '总量',
-                smooth: false,
-                symbol: 'none',
-                itemStyle: {
-                    normal: {
-                        label: {
-                            show: false,
-                            textStyle: {
-                                fontSize: '20',
-                                fontFamily: '微软雅黑',
-                                fontWeight: 'bold'
-                            }
-                        },
-                        areaStyle: {
-                            // 区域图，纵向渐变填充
-                            color: (function() {
-                                var zrColor = require('zrender/tool/color');
-                                return zrColor.getRadialGradient(442, 0, 100, 442, 50, 360, [
-                                    [0, 'rgba(126,154,167,0.75)'],
-                                    [1, 'rgba(60,62,69,0)']
-                                ])
-                            })()
-                        },
-                        lineStyle: { // 系列级个性化折线样式，横向渐变描边
-                            width: 2,
-                            color: (function() {
-                                var zrColor = require('zrender/tool/color');
-                                return zrColor.getLinearGradient(
-                                    0, 0, 884, 0, [
-                                        [0, 'rgba(134,168,58,0.8)'],
-                                        [0.25, 'rgba(163,202,76,0.8)'],
-                                        [0.5, 'rgba(200,228,240,0.8)'],
-                                        [0.75, 'rgba(221,233,247,0.8)'],
-                                        [1, 'rgba(79,100,110,0.8)']
-                                    ]
-                                )
-                            })(),
-                            shadowColor: 'rgba(0,0,0,0.5)',
-                            shadowBlur: 10,
-                            shadowOffsetX: 8,
-                            shadowOffsetY: 8
-                        }
-                    }
-                },
-                data: []
-            }, {
-                name: '标普500',
                 type: 'line',
                 stack: '总量',
                 smooth: false,
@@ -371,10 +288,10 @@ require(
                 $.getJSON(i + '.html', function(data) {
                     stoped[i] = 1;
                     $.each(data.sktq, function(i2, item) {
-                        xAxisData[i].push(item[0]);
-                        serieData1[i].push(item[1]);
-                        serieData2[i].push(item[5]);
-                        serieData3[i].push(item[7]);
+                        xAxisData[i].push(i + '-' + item[0]);
+                        serieData1[i].push(Number(item[1]).toFixed(4));
+                        serieData2[i].push(Number(item[5]).toFixed(2));
+                        serieData3[i].push(Number(item[7]).toFixed(2));
                     });
 
                 });
@@ -453,6 +370,16 @@ require(
                     myChart.setOption(option);
                     break;
             }
+        });
+
+        var ecConfig = require('echarts/config');
+        myChart.on(ecConfig.EVENT.DATA_ZOOM, function(zoom, chart){
+            console.log(zoom);
+            console.log(chart);
+
+            var xAxisData = chart._option.xAxis[0].data;
+            $('.range-start').text(xAxisData[0]);
+            $('.range-end').text(xAxisData[xAxisData.length - 1]);
         });
 
 
