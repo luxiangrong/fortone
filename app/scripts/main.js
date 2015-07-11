@@ -83,7 +83,7 @@ require(
             calculable: false,
             dataZoom: {
                 show: true,
-                realtime: true,
+                realtime: false,
                 //orient: 'vertical',   // 'horizontal'
                 //x: 0,
                 y: 350,
@@ -409,18 +409,18 @@ require(
                     });
 
                 });
-                // $.each(serieData2, function(i2, item2) {
-                //     $.each(item2.reverse(), function(i3, item3) {
-                //         option.series[1].data.push(item3);
-                //     });
+                $.each(serieData2, function(i2, item2) {
+                    $.each(item2.reverse(), function(i3, item3) {
+                        // option.series[1].data.push(item3);
+                    });
 
-                // });
-                // $.each(serieData3, function(i2, item2) {
-                //     $.each(item2.reverse(), function(i3, item3) {
-                //         option.series[2].data.push(item3);
-                //     });
+                });
+                $.each(serieData3, function(i2, item2) {
+                    $.each(item2.reverse(), function(i3, item3) {
+                        // option.series[2].data.push(item3);
+                    });
 
-                // });
+                });
 
 
                 myChart.hideLoading();
@@ -457,9 +457,8 @@ require(
             }
         });
 
+        var duibi = [];
         $('[name="duibi"]').on('ifChanged', function() {
-
-
             var duibi = [];
             var data1 = [],
                 data2 = [],
@@ -471,274 +470,91 @@ require(
             });
             $('[name="duibi"]:checked').each(function(i, data) {
                 duibi.push($(data).val());
-                switch ($(data).val()) {
-                    case 'shangzheng':
-                        $.each(serieData2, function(i, item) {
-                            $.each(item.reverse(), function(i2, item2) {
-                                data2.push(item2);
-                            });
-                        });
-                        break;
-                    case 'biaopu':
-                        $.each(serieData3, function(i, item) {
-                            $.each(item.reverse(), function(i2, item2) {
-                                data3.push(item2);
-                            });
-                        });
-                        break;
-                }
             });
 
             if (duibi.length > 0) {
-                option.series = [{
-                    name: '净值',
-                    type: 'line',
-                    stack: '总量',
-                    smooth: false,
-                    symbol: 'none',
-                    itemStyle: {
-                        normal: {
-                            label: {
-                                show: false,
-                                textStyle: {
-                                    fontSize: '20',
-                                    fontFamily: '微软雅黑',
-                                    fontWeight: 'bold'
-                                }
-                            },
-                            areaStyle: {
-                                // 区域图，纵向渐变填充
-                                color: (function() {
-                                    var zrColor = require('zrender/tool/color');
-                                    return zrColor.getRadialGradient(442, 0, 100, 442, 50, 360, [
-                                        [0, 'rgba(126,154,167,0.75)'],
-                                        [1, 'rgba(60,62,69,0)']
-                                    ])
-                                })()
-                            },
-                            lineStyle: { // 系列级个性化折线样式，横向渐变描边
-                                width: 2,
-                                color: (function() {
-                                    var zrColor = require('zrender/tool/color');
-                                    return zrColor.getLinearGradient(
-                                        0, 0, 884, 0, [
-                                            [0, 'rgba(134,168,58,0.8)'],
-                                            [0.25, 'rgba(163,202,76,0.8)'],
-                                            [0.5, 'rgba(200,228,240,0.8)'],
-                                            [0.75, 'rgba(221,233,247,0.8)'],
-                                            [1, 'rgba(79,100,110,0.8)']
-                                        ]
-                                    )
-                                })(),
-                                shadowColor: 'rgba(0,0,0,0.5)',
-                                shadowBlur: 10,
-                                shadowOffsetX: 8,
-                                shadowOffsetY: 8
-                            }
-                        }
-                    },
-                    data: data1
-                }];
-
-                if (data2.length > 0) {
-                    option.series.push({
-                        name: '上证指数',
-                        type: 'line',
-                        stack: '上证指数',
-                        smooth: false,
-                        symbol: 'none',
-                        itemStyle: {
-                            normal: {
-                                label: {
-                                    show: false,
-                                    textStyle: {
-                                        fontSize: '20',
-                                        fontFamily: '微软雅黑',
-                                        fontWeight: 'bold'
-                                    }
-                                },
-                                areaStyle: {
-                                    // 区域图，纵向渐变填充
-                                    color: (function() {
-                                        var zrColor = require('zrender/tool/color');
-                                        return zrColor.getRadialGradient(442, 0, 100, 442, 50, 360, [
-                                            [0, 'rgba(126,154,167,0.75)'],
-                                            [1, 'rgba(60,62,69,0)']
-                                        ])
-                                    })()
-                                },
-                                lineStyle: { // 系列级个性化折线样式，横向渐变描边
-                                    width: 2,
-                                    color: (function() {
-                                        var zrColor = require('zrender/tool/color');
-                                        return zrColor.getLinearGradient(
-                                            0, 0, 884, 0, [
-                                                [0, 'rgba(134,168,58,0.8)'],
-                                                [0.25, 'rgba(163,202,76,0.8)'],
-                                                [0.5, 'rgba(200,228,240,0.8)'],
-                                                [0.75, 'rgba(221,233,247,0.8)'],
-                                                [1, 'rgba(79,100,110,0.8)']
-                                            ]
-                                        )
-                                    })(),
-                                    shadowColor: 'rgba(0,0,0,0.5)',
-                                    shadowBlur: 10,
-                                    shadowOffsetX: 8,
-                                    shadowOffsetY: 8
-                                }
-                            }
-                        },
-                        data: data2
-                    });
-                }
-                if (data3.length > 0) {
-                    option.series.push({
-                        name: '标普500',
-                        type: 'line',
-                        stack: '标普500',
-                        smooth: false,
-                        symbol: 'none',
-                        itemStyle: {
-                            normal: {
-                                label: {
-                                    show: false,
-                                    textStyle: {
-                                        fontSize: '20',
-                                        fontFamily: '微软雅黑',
-                                        fontWeight: 'bold'
-                                    }
-                                },
-                                areaStyle: {
-                                    // 区域图，纵向渐变填充
-                                    color: (function() {
-                                        var zrColor = require('zrender/tool/color');
-                                        return zrColor.getRadialGradient(442, 0, 100, 442, 50, 360, [
-                                            [0, 'rgba(126,154,167,0.75)'],
-                                            [1, 'rgba(60,62,69,0)']
-                                        ])
-                                    })()
-                                },
-                                lineStyle: { // 系列级个性化折线样式，横向渐变描边
-                                    width: 2,
-                                    color: (function() {
-                                        var zrColor = require('zrender/tool/color');
-                                        return zrColor.getLinearGradient(
-                                            0, 0, 884, 0, [
-                                                [0, 'rgba(134,168,58,0.8)'],
-                                                [0.25, 'rgba(163,202,76,0.8)'],
-                                                [0.5, 'rgba(200,228,240,0.8)'],
-                                                [0.75, 'rgba(221,233,247,0.8)'],
-                                                [1, 'rgba(79,100,110,0.8)']
-                                            ]
-                                        )
-                                    })(),
-                                    shadowColor: 'rgba(0,0,0,0.5)',
-                                    shadowBlur: 10,
-                                    shadowOffsetX: 8,
-                                    shadowOffsetY: 8
-                                }
-                            }
-                        },
-                        data: data3
-                    });
-                }
-                myChart.clear();
-                myChart.setOption(option);
-
-                // var newSeries = myChart.component.xAxis.series;
-
-
-                // $.each(newSeries, function(i, item){
-                //     var startValue = Number(item.data[0]);
-
-
-
-                //     var newData = [];
-                //     $.each(item.data, function(i2, item2){
-                //         newData.push(Number(item2) - startValue / startValue);
-                //     });
-
-                //     console.log(newData);
-                //     option.series[i].data = newData;
-                // });
-
-                // myChart.clear();
-                // myChart.setOption(option);
+                
             } else {
-
-                option.series = [{
-                    name: '净值',
-                    type: 'line',
-                    stack: '总量',
-                    smooth: false,
-                    symbol: 'none',
-                    itemStyle: {
-                        normal: {
-                            label: {
-                                show: false,
-                                textStyle: {
-                                    fontSize: '20',
-                                    fontFamily: '微软雅黑',
-                                    fontWeight: 'bold'
-                                }
-                            },
-                            areaStyle: {
-                                // 区域图，纵向渐变填充
-                                color: (function() {
-                                    var zrColor = require('zrender/tool/color');
-                                    return zrColor.getRadialGradient(442, 0, 100, 442, 50, 360, [
-                                        [0, 'rgba(126,154,167,0.75)'],
-                                        [1, 'rgba(60,62,69,0)']
-                                    ])
-                                })()
-                            },
-                            lineStyle: { // 系列级个性化折线样式，横向渐变描边
-                                width: 2,
-                                color: (function() {
-                                    var zrColor = require('zrender/tool/color');
-                                    return zrColor.getLinearGradient(
-                                        0, 0, 884, 0, [
-                                            [0, 'rgba(134,168,58,0.8)'],
-                                            [0.25, 'rgba(163,202,76,0.8)'],
-                                            [0.5, 'rgba(200,228,240,0.8)'],
-                                            [0.75, 'rgba(221,233,247,0.8)'],
-                                            [1, 'rgba(79,100,110,0.8)']
-                                        ]
-                                    )
-                                })(),
-                                shadowColor: 'rgba(0,0,0,0.5)',
-                                shadowBlur: 10,
-                                shadowOffsetX: 8,
-                                shadowOffsetY: 8
-                            }
-                        }
-                    },
-                    data: data1
-                }];
-                myChart.clear();
-                myChart.setOption(option);
+                
             }
 
-            
+
 
         });
 
         var ecConfig = require('echarts/config');
+        var lastZoomStart = 0;
+        var lastZoomEnd = 0;
+
+        function createDuibiData(dataArray, basePos) {
+            var baseData = dataArray[Math.floor(zoom.zoom.start * dataArray.length / 100)];
+            var result = [];
+            $.each(dataArray, function(index, value) {
+                result.push((value - baseValue) / baseValue * 100);
+            });
+            return result;
+        }
+
+
         myChart.on(ecConfig.EVENT.DATA_ZOOM, function(zoom, chart) {
+            var jingzhiData = [];
+            var shangzhengData = [];
+            var biaopuData = [];
+
+            $.each(serieData1, function(year, yearData) {
+                jingzhiData = jingzhiData.concat(yearData);
+            });
+
+            $.each(serieData2, function(year, yearData) {
+                shangzhengData = shangzhengData.concat(yearData);
+            });
+
+            $.each(serieData2, function(year, yearData) {
+                biaopuData = biaopuData.concat(yearData);
+            });
+
+
+            if (lastZoomStart != zoom.zoom.start || lastZoomEnd != zoom.zoom.end) {
+                lastZoomStart = zoom.zoom.start;
+                lastZoomEnd = zoom.zoom.end;
+
+                var inViewSeries = chart._option.series;
+                var allSeries = option.series;
+
+                $.each(inViewSeries, function(i, serie) {
+                    var baseValue = jingzhiData[Math.floor(zoom.zoom.start * jingzhiData.length / 100)];
+
+                    newSerieData = [];
+
+                    if (i == 0) {
+                        $.each(serieData1, function(year, yearData) {
+                            $.each(yearData, function(i2, value) {
+                                newSerieData.push((value - baseValue) / baseValue * 100);
+                            });
+                        });
+                        option.series[i].data = newSerieData;
+                    }
+
+                });
+
+                myChart.setOption(option);
+            }
+
+
+
+
+
+
+
             var xAxisData = chart._option.xAxis[0].data;
 
-            var inViewSeries = chart._option.series;
 
-            $.each(inViewSeries, function(i, serie){
-                var baseValue = serie.data[0];
-            });
 
             $('.range-start').text(xAxisData[0]);
             $('.range-end').text(xAxisData[xAxisData.length - 1]);
         });
 
-        myChart.on(ecConfig.EVENT.REFRESH, function(a, b) {
-        });
+        myChart.on(ecConfig.EVENT.REFRESH, function(a, b) {});
 
 
         // 为echarts对象加载数据 
