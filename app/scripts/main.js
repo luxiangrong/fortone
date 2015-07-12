@@ -30,22 +30,49 @@ require(
                 },
                 showContent: false,
                 formatter: function(params, ticket, callback) {
-                    // console.log(params)
-                    $.each(params, function(i, param) {
-                        $('.tooltip .date').text(param.name);
-                        switch (param.seriesName) {
-                            case '净值':
-                                var currentVal = Number(param.data);
-                                var currentIndex = param.dataIndex;
-                                if (currentIndex == 0) {
-                                    var lastVal = currentVal;
-                                } else {
-                                    var lastVal = Number(param.series.data[currentIndex - 1]);
-                                }
-                                $('.tooltip .jingzhi').text('净值：' + currentVal + '（ ' + ((currentVal - lastVal) / lastVal * 100).toFixed(2) + '% ）');
-                                break;
-                        }
-                    });
+                    if (params.length == 1) {
+                        $.each(params, function(i, param) {
+                            $('.tooltip .date').text(param.name);
+                            switch (param.seriesName) {
+                                case '净值':
+                                    var currentVal = Number(param.data);
+                                    var currentIndex = param.dataIndex;
+                                    if (currentIndex == 0) {
+                                        var lastVal = currentVal;
+                                    } else {
+                                        var lastVal = Number(param.series.data[currentIndex - 1]);
+                                    }
+                                    $('.tooltip .jingzhi').text('净值：' + currentVal + '（ ' + ((currentVal - lastVal) / lastVal * 100).toFixed(2) + '% ）');
+                                    break;
+                            }
+                        });
+                    } else {
+                        $.each(params, function(i, param) {
+                            $('.tooltip .date').text(param.name);
+
+
+                            switch (param.seriesName) {
+                                case '净值':
+                                    var baseData = Number(data1[Math.ceil(myChart.component.dataZoom._zoom.start * data1.length / 100)]);
+                                    var currentVal = Number(param.data);
+                                    var currentData = baseData + currentVal / 100 * baseData;
+                                    $('.tooltip .jingzhi').text('净值：' + currentData.toFixed(2) + '（ ' + currentVal.toFixed(2) + '% ）');
+                                    break;
+                                case '上证':
+                                    var baseData = Number(data2[Math.ceil(myChart.component.dataZoom._zoom.start * data2.length / 100)]);
+                                    var currentVal = Number(param.data);
+                                    var currentData = baseData + currentVal / 100 * baseData;
+                                    $('.tooltip .shangzheng').text('上证指数：' + currentData.toFixed(2) + '（ ' + currentVal.toFixed(2) + '% ）');
+                                    break;
+                                case '标普':
+                                    var baseData = Number(data3[Math.ceil(myChart.component.dataZoom._zoom.start * data3.length / 100)]);
+                                    var currentVal = Number(param.data);
+                                    var currentData = baseData + currentVal / 100 * baseData;
+                                    $('.tooltip .biaopu').text('标普500：' + currentData.toFixed(2) + '（ ' + currentVal.toFixed(2) + '% ）');
+                                    break;
+                            }
+                        });
+                    }
                     return '';
                 }
             },
@@ -116,6 +143,7 @@ require(
                 boundaryGap: false,
                 axisLine: { // 轴线
                     show: true,
+                    onZero: false,
                     lineStyle: {
                         color: (function() {
                             var zrColor = require('zrender/tool/color');
@@ -148,7 +176,7 @@ require(
                         if (value == null) {
                             return '';
                         }
-                        return value.split('-')[1] + '月' + value.split('-')[2] + '日';
+                        return value.split('-')[1] + '-' + value.split('-')[2] + '';
                     },
                     textStyle: {
                         color: '#6b8f1a',
@@ -262,7 +290,7 @@ require(
             }]
         };
 
-        var shangzhengStyle = {
+        var jingzhiStyle1 = {
             normal: {
                 label: {
                     show: false,
@@ -288,14 +316,75 @@ require(
                         var zrColor = require('zrender/tool/color');
                         return zrColor.getLinearGradient(
                             0, 0, 884, 0, [
-                                [0, 'rgba(0,0,244,0.8)'],
-                                [0.25, 'rgba(0,0,244,0.8)'],
+                                [0, 'rgba(134,168,58,0.8)'],
+                                [0.25, 'rgba(163,202,76,0.8)'],
                                 [0.5, 'rgba(200,228,240,0.8)'],
                                 [0.75, 'rgba(221,233,247,0.8)'],
                                 [1, 'rgba(79,100,110,0.8)']
                             ]
                         )
                     })(),
+                    shadowColor: 'rgba(0,0,0,0.5)',
+                    shadowBlur: 10,
+                    shadowOffsetX: 8,
+                    shadowOffsetY: 8
+                }
+            }
+        };
+
+        var jingzhiStyle2 = {
+            normal: {
+                label: {
+                    show: false,
+                    textStyle: {
+                        fontSize: '20',
+                        fontFamily: '微软雅黑',
+                        fontWeight: 'bold'
+                    }
+                },
+                // areaStyle: {
+                //     color: (function() {
+                //         var zrColor = require('zrender/tool/color');
+                //         return zrColor.getRadialGradient(442, 0, 100, 442, 50, 360, [
+                //             [0, 'rgba(126,154,167,0.75)'],
+                //             [1, 'rgba(60,62,69,0)']
+                //         ])
+                //     })()
+                // },
+                lineStyle: { // 系列级个性化折线样式，横向渐变描边
+                    width: 2,
+                    color: '#df000d',
+                    shadowColor: 'rgba(0,0,0,0.5)',
+                    shadowBlur: 10,
+                    shadowOffsetX: 8,
+                    shadowOffsetY: 8
+                }
+            }
+        };
+
+        var shangzhengStyle = {
+            normal: {
+                label: {
+                    show: false,
+                    textStyle: {
+                        fontSize: '20',
+                        fontFamily: '微软雅黑',
+                        fontWeight: 'bold'
+                    }
+                },
+                // areaStyle: {
+                //     // 区域图，纵向渐变填充
+                //     color: (function() {
+                //         var zrColor = require('zrender/tool/color');
+                //         return zrColor.getRadialGradient(442, 0, 100, 442, 50, 360, [
+                //             [0, 'rgba(126,154,167,0.75)'],
+                //             [1, 'rgba(60,62,69,0)']
+                //         ])
+                //     })()
+                // },
+                lineStyle: { // 系列级个性化折线样式，横向渐变描边
+                    width: 2,
+                    color: '#192893',
                     shadowColor: 'rgba(0,0,0,0.5)',
                     shadowBlur: 10,
                     shadowOffsetX: 8,
@@ -314,30 +403,19 @@ require(
                         fontWeight: 'bold'
                     }
                 },
-                areaStyle: {
-                    // 区域图，纵向渐变填充
-                    color: (function() {
-                        var zrColor = require('zrender/tool/color');
-                        return zrColor.getRadialGradient(442, 0, 100, 442, 50, 360, [
-                            [0, 'rgba(126,154,167,0.75)'],
-                            [1, 'rgba(60,62,69,0)']
-                        ])
-                    })()
-                },
+                // areaStyle: {
+                //     // 区域图，纵向渐变填充
+                //     color: (function() {
+                //         var zrColor = require('zrender/tool/color');
+                //         return zrColor.getRadialGradient(442, 0, 100, 442, 50, 360, [
+                //             [0, 'rgba(126,154,167,0.75)'],
+                //             [1, 'rgba(60,62,69,0)']
+                //         ])
+                //     })()
+                // },
                 lineStyle: { // 系列级个性化折线样式，横向渐变描边
                     width: 2,
-                    color: (function() {
-                        var zrColor = require('zrender/tool/color');
-                        return zrColor.getLinearGradient(
-                            0, 0, 884, 0, [
-                                [0, 'rgba(0,0,244,0.8)'],
-                                [0.25, 'rgba(0,0,244,0.8)'],
-                                [0.5, 'rgba(200,228,240,0.8)'],
-                                [0.75, 'rgba(221,233,247,0.8)'],
-                                [1, 'rgba(79,100,110,0.8)']
-                            ]
-                        )
-                    })(),
+                    color: '#592305',
                     shadowColor: 'rgba(0,0,0,0.5)',
                     shadowBlur: 10,
                     shadowOffsetX: 8,
@@ -383,11 +461,9 @@ require(
             })(i)
         }
 
-
-
-
-
-
+        var data1 = [],
+            data2 = [],
+            data3 = [];
         var handler = window.setInterval(function() {
             var total = 0;
             $.each(stoped, function(i, item) {
@@ -423,12 +499,56 @@ require(
                 });
 
 
+                $.each(serieData1, function(year, yearData) {
+                    data1 = data1.concat(yearData);
+                });
+                $.each(serieData2, function(year, yearData) {
+                    data2 = data2.concat(yearData);
+                });
+                $.each(serieData3, function(year, yearData) {
+                    data3 = data3.concat(yearData);
+                });
+
+
                 myChart.hideLoading();
                 option.dataZoom.start = (1 - 22 / option.series[0].data.length) * 100;
                 myChart.setOption(option);
 
+                resetOption();
+
+                renderExtra();
             }
         }, 1000);
+
+        function renderExtra() {
+            var zr = myChart.getZrender();
+            var TextShape = require('zrender/shape/Text');
+
+            var grid = myChart.component.grid;
+
+            var daysArray = [];
+            var allDaysNum = 0;
+            $.each(serieData1, function(i, data) {
+                daysArray.push(data.length);
+                allDaysNum += data.length;
+            });
+
+            var currentX = grid._x;
+            $.each(daysArray, function(i, num) {
+                console.log(grid._x + grid._width * num / allDaysNum);
+                zr.addShape(new TextShape({
+                    style: {
+                        x: currentX,
+                        y: grid._height + grid._y * 2 + 5,
+                        color: '#6b8f1a',
+                        text: 2008 + i,
+                        textAlign: 'center'
+                    }
+                }));
+                zr.render();
+                currentX += grid._width * num / allDaysNum;
+            });
+        }
 
 
         $('[name="range"]').on('ifChecked', function() {
@@ -455,30 +575,12 @@ require(
                     myChart.setOption(option);
                     break;
             }
+            resetOption();
         });
 
         var duibi = [];
         $('[name="duibi"]').on('ifChanged', function() {
-            var duibi = [];
-            var data1 = [],
-                data2 = [],
-                data3 = [];
-            $.each(serieData1, function(i, item) {
-                $.each(item.reverse(), function(i2, item2) {
-                    data1.push(item2);
-                });
-            });
-            $('[name="duibi"]:checked').each(function(i, data) {
-                duibi.push($(data).val());
-            });
-
-            if (duibi.length > 0) {
-                
-            } else {
-                
-            }
-
-
+            resetOption();
 
         });
 
@@ -487,12 +589,112 @@ require(
         var lastZoomEnd = 0;
 
         function createDuibiData(dataArray, basePos) {
-            var baseData = dataArray[Math.floor(zoom.zoom.start * dataArray.length / 100)];
+            var baseData = dataArray[Math.floor(myChart.component.dataZoom._zoom.start * dataArray.length / 100)];
             var result = [];
             $.each(dataArray, function(index, value) {
-                result.push((value - baseValue) / baseValue * 100);
+                result.push((value - baseData) / baseData * 100);
             });
             return result;
+        }
+
+        function resetOption() {
+            var duibi = [];
+            var data1 = [],
+                data2 = [],
+                data3 = [];
+            $.each(serieData1, function(year, yearData) {
+                data1 = data1.concat(yearData);
+            });
+            $.each(serieData2, function(year, yearData) {
+                data2 = data2.concat(yearData);
+            });
+            $.each(serieData3, function(year, yearData) {
+                data3 = data3.concat(yearData);
+            });
+
+            $('[name="duibi"]:checked').each(function(i, data) {
+                duibi.push($(data).val());
+            });
+
+            var series = [];
+            if (duibi.length > 0) {
+                var jingzhiData = createDuibiData(data1);
+                var jingzhiSerie = {
+                    name: '净值',
+                    type: 'line',
+                    stack: '净值',
+                    smooth: false,
+                    symbol: 'none',
+                    itemStyle: jingzhiStyle2,
+                    data: jingzhiData
+                }
+                series.push(jingzhiSerie);
+                var base = Number(data1[Math.floor(myChart.component.dataZoom._zoom.start * data1.length / 100)]);
+                var rate = Number(jingzhiData[Math.floor(myChart.component.dataZoom._zoom.end * jingzhiData.length / 100) - 1]);
+                $('.tooltip .jingzhi').text('净值：' + (base + base * rate / 100).toFixed(2) + '（ ' + rate.toFixed(2) + '% ）');
+
+                if ($.inArray('shangzheng', duibi) != -1) {
+                    var shangzhangData = createDuibiData(data2);
+                    var shangzhengSerie = {
+                        name: '上证',
+                        type: 'line',
+                        stack: '上证',
+                        smooth: false,
+                        symbol: 'none',
+                        itemStyle: shangzhengStyle,
+                        data: shangzhangData
+                    };
+                    series.push(shangzhengSerie);
+                    $('.tooltip .shangzheng').show();
+                    var base = Number(data2[Math.floor(myChart.component.dataZoom._zoom.start * data2.length / 100)]);
+                    var rate = Number(shangzhangData[Math.floor(myChart.component.dataZoom._zoom.end * shangzhangData.length / 100) - 1]);
+                    $('.tooltip .shangzheng').text('上证指数：' + (base + base * rate / 100).toFixed(2) + '（ ' + rate.toFixed(2) + '% ）');
+                } else {
+                    $('.tooltip .shangzheng').hide();
+                }
+                if ($.inArray('biaopu', duibi) != -1) {
+                    var biaopuData = createDuibiData(data3);
+                    var biaopuSerie = {
+                        name: '标普',
+                        type: 'line',
+                        stack: '标普',
+                        smooth: false,
+                        symbol: 'none',
+                        itemStyle: biaopuStyle,
+                        data: biaopuData
+                    };
+                    series.push(biaopuSerie);
+                    $('.tooltip .biaopu').show();
+                    var base = Number(data3[Math.floor(myChart.component.dataZoom._zoom.start * data3.length / 100)]);
+                    var rate = Number(biaopuData[Math.floor(myChart.component.dataZoom._zoom.end * biaopuData.length / 100) - 1]);
+                    $('.tooltip .biaopu').text('标普500' + (base + base * rate / 100).toFixed(2) + '（ ' + rate.toFixed(2) + '% ）');
+                } else {
+                    $('.tooltip .biaopu').hide();
+                }
+
+            } else {
+                var jingzhiSerie = {
+                    name: '净值',
+                    type: 'line',
+                    stack: '净值',
+                    smooth: false,
+                    symbol: 'none',
+                    itemStyle: jingzhiStyle1,
+                    data: data1
+                }
+                series.push(jingzhiSerie);
+
+
+                $('.tooltip .shangzheng').hide();
+                $('.tooltip .biaopu').hide();
+            }
+
+            option.series = series;
+
+            myChart.clear();
+            myChart.setOption(option);
+
+            renderExtra();
         }
 
 
@@ -518,46 +720,18 @@ require(
                 lastZoomStart = zoom.zoom.start;
                 lastZoomEnd = zoom.zoom.end;
 
-                var inViewSeries = chart._option.series;
-                var allSeries = option.series;
-
-                $.each(inViewSeries, function(i, serie) {
-                    var baseValue = jingzhiData[Math.floor(zoom.zoom.start * jingzhiData.length / 100)];
-
-                    newSerieData = [];
-
-                    if (i == 0) {
-                        $.each(serieData1, function(year, yearData) {
-                            $.each(yearData, function(i2, value) {
-                                newSerieData.push((value - baseValue) / baseValue * 100);
-                            });
-                        });
-                        option.series[i].data = newSerieData;
-                    }
-
-                });
-
-                myChart.setOption(option);
+                option.dataZoom.start = zoom.zoom.start;
+                option.dataZoom.end = zoom.zoom.end;
+                resetOption();
             }
 
-
-
-
-
-
-
             var xAxisData = chart._option.xAxis[0].data;
-
-
-
             $('.range-start').text(xAxisData[0]);
             $('.range-end').text(xAxisData[xAxisData.length - 1]);
+
+            renderExtra();
         });
 
-        myChart.on(ecConfig.EVENT.REFRESH, function(a, b) {});
 
-
-        // 为echarts对象加载数据 
-        // myChart.setOption(option);
     }
 );
