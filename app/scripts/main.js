@@ -535,7 +535,6 @@ require(
 
             var currentX = grid._x;
             $.each(daysArray, function(i, num) {
-                console.log(grid._x + grid._width * num / allDaysNum);
                 zr.addShape(new TextShape({
                     style: {
                         x: currentX,
@@ -683,7 +682,6 @@ require(
                     data: data1
                 }
                 series.push(jingzhiSerie);
-
 
                 $('.tooltip .shangzheng').hide();
                 $('.tooltip .biaopu').hide();
