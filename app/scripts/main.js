@@ -461,9 +461,11 @@ require(
             })(i)
         }
 
-        var data1 = [],
+        var datax = [],
+            data1 = [],
             data2 = [],
             data3 = [];
+            
         var handler = window.setInterval(function() {
             var total = 0;
             $.each(stoped, function(i, item) {
@@ -471,44 +473,27 @@ require(
                 total += item;
             });
 
-            if (total == currentYear - 2008 + 1) {
+            if (total == (currentYear - 2008 + 1)) {
                 clearInterval(handler);
-                $.each(xAxisData, function(i2, item2) {
-                    $.each(item2.reverse(), function(i3, item3) {
-                        option.xAxis[0].data.push(item3);
-                    });
 
-                });
-                $.each(serieData1, function(i2, item2) {
-                    $.each(item2.reverse(), function(i3, item3) {
-                        option.series[0].data.push(item3);
-                    });
+                for (var index = currentYear; index >= 2008; index--) {
+                    datax = datax.concat(xAxisData[index]);
+                    data1 = data1.concat(serieData1[index]);
+                    data2 = data2.concat(serieData2[index]);
+                    data3 = data3.concat(serieData3[index]);
+                }
 
-                });
-                $.each(serieData2, function(i2, item2) {
-                    $.each(item2.reverse(), function(i3, item3) {
-                        // option.series[1].data.push(item3);
-                    });
+                datax = datax.reverse();
+                data1 = data1.reverse();
+                data2 = data2.reverse();
+                data3 = data3.reverse();
 
+                $.each(datax, function(i, data){
+                    option.xAxis[0].data.push(data);
                 });
-                $.each(serieData3, function(i2, item2) {
-                    $.each(item2.reverse(), function(i3, item3) {
-                        // option.series[2].data.push(item3);
-                    });
-
+                $.each(data1, function(i, data){
+                    option.series[0].data.push(data);
                 });
-
-
-                $.each(serieData1, function(year, yearData) {
-                    data1 = data1.concat(yearData);
-                });
-                $.each(serieData2, function(year, yearData) {
-                    data2 = data2.concat(yearData);
-                });
-                $.each(serieData3, function(year, yearData) {
-                    data3 = data3.concat(yearData);
-                });
-
 
                 myChart.hideLoading();
                 option.dataZoom.start = (1 - 22 / option.series[0].data.length) * 100;
@@ -598,18 +583,6 @@ require(
 
         function resetOption() {
             var duibi = [];
-            var data1 = [],
-                data2 = [],
-                data3 = [];
-            $.each(serieData1, function(year, yearData) {
-                data1 = data1.concat(yearData);
-            });
-            $.each(serieData2, function(year, yearData) {
-                data2 = data2.concat(yearData);
-            });
-            $.each(serieData3, function(year, yearData) {
-                data3 = data3.concat(yearData);
-            });
 
             $('[name="duibi"]:checked').each(function(i, data) {
                 duibi.push($(data).val());
@@ -671,6 +644,10 @@ require(
                     $('.tooltip .biaopu').hide();
                 }
 
+                option.yAxis[0].axisLabel.formatter = function(value) {
+                    return Number(value).toFixed(0) + '%';
+                };
+
             } else {
                 var jingzhiSerie = {
                     name: '净值',
@@ -685,6 +662,10 @@ require(
 
                 $('.tooltip .shangzheng').hide();
                 $('.tooltip .biaopu').hide();
+
+                option.yAxis[0].axisLabel.formatter = function(value) {
+                    return Number(value).toFixed(2);
+                };
             }
 
             option.series = series;

@@ -17,8 +17,11 @@ body {
     font-size: 14px;
 }
 
-#main-chart {
+.chart-wrap {
     background: url(../images/chart_bg.png) no-repeat center center;
+}
+
+#main-chart {
     width: 884px;
     height: 393px;
     margin-top: 20px;
@@ -162,7 +165,7 @@ h1.page-title {
         }
     }
     .l-b {
-        margin-left: 15px;
+        margin-left: 10px;
     }
 }
 
