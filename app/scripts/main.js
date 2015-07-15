@@ -82,7 +82,7 @@ require(
             },
             grid: {
                 borderWidth: 0,
-                y1: 40,
+                y1: 20,
                 y2: 80
             },
             toolbox: {
@@ -113,9 +113,9 @@ require(
                 realtime: false,
                 //orient: 'vertical',   // 'horizontal'
                 //x: 0,
-                y: 350,
+                y: 336,
                 //width: 400,
-                height: 16,
+                height: 30,
                 backgroundColor: 'rgba(0,0,0,0.7)',
                 dataBackgroundColor: (function() {
                     var zrColor = require('zrender/tool/color');
@@ -353,7 +353,18 @@ require(
                 // },
                 lineStyle: { // 系列级个性化折线样式，横向渐变描边
                     width: 2,
-                    color: '#df000d',
+                    color: (function() {
+                                var zrColor = require('zrender/tool/color');
+                                return zrColor.getLinearGradient(
+                                    0, 0, 884, 0, [
+                                        [0, 'rgba(134,168,58,0.8)'],
+                                        [0.25, 'rgba(163,202,76,0.8)'],
+                                        [0.5, 'rgba(200,228,240,0.8)'],
+                                        [0.75, 'rgba(221,233,247,0.8)'],
+                                        [1, 'rgba(79,100,110,0.8)']
+                                    ]
+                                )
+                            })(),
                     shadowColor: 'rgba(0,0,0,0.5)',
                     shadowBlur: 10,
                     shadowOffsetX: 8,
