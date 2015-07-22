@@ -370,7 +370,7 @@ module.exports = function (grunt) {
           expand: true,
           dot: true,
           cwd: '.',
-          src: 'bower_components/echarts/build/dist/chart/*',
+          src: 'bower_components/echarts/build/source/chart/*',
           dest: '<%= config.dist %>'
         },{
           expand: true,

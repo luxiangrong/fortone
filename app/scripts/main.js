@@ -1,6 +1,6 @@
 require.config({
     paths: {
-        echarts: 'bower_components/echarts/build/dist'
+        echarts: 'bower_components/echarts/build/source'
     }
 });
 // 使用
