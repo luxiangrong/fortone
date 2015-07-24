@@ -316,11 +316,11 @@ require(
                         var zrColor = require('zrender/tool/color');
                         return zrColor.getLinearGradient(
                             0, 0, 884, 0, [
-                                [0, 'rgba(134,168,58,0.8)'],
-                                [0.25, 'rgba(163,202,76,0.8)'],
-                                [0.5, 'rgba(200,228,240,0.8)'],
-                                [0.75, 'rgba(221,233,247,0.8)'],
-                                [1, 'rgba(79,100,110,0.8)']
+                                [0, 'rgba(153,204,51,1)'],
+                                [0.25, 'rgba(163,202,76,1)'],
+                                [0.5, 'rgba(200,228,240,1)'],
+                                [0.75, 'rgba(221,233,247,1)'],
+                                [1, 'rgba(79,100,110,1)']
                             ]
                         )
                     })(),
@@ -353,18 +353,7 @@ require(
                 // },
                 lineStyle: { // 系列级个性化折线样式，横向渐变描边
                     width: 2,
-                    color: (function() {
-                                var zrColor = require('zrender/tool/color');
-                                return zrColor.getLinearGradient(
-                                    0, 0, 884, 0, [
-                                        [0, 'rgba(134,168,58,0.8)'],
-                                        [0.25, 'rgba(163,202,76,0.8)'],
-                                        [0.5, 'rgba(200,228,240,0.8)'],
-                                        [0.75, 'rgba(221,233,247,0.8)'],
-                                        [1, 'rgba(79,100,110,0.8)']
-                                    ]
-                                )
-                            })(),
+                    color: '#99cc33',
                     shadowColor: 'rgba(0,0,0,0.5)',
                     shadowBlur: 10,
                     shadowOffsetX: 8,
@@ -395,7 +384,7 @@ require(
                 // },
                 lineStyle: { // 系列级个性化折线样式，横向渐变描边
                     width: 2,
-                    color: '#192893',
+                    color: '#003399',
                     shadowColor: 'rgba(0,0,0,0.5)',
                     shadowBlur: 10,
                     shadowOffsetX: 8,
@@ -426,7 +415,7 @@ require(
                 // },
                 lineStyle: { // 系列级个性化折线样式，横向渐变描边
                     width: 2,
-                    color: '#592305',
+                    color: '#460505',
                     shadowColor: 'rgba(0,0,0,0.5)',
                     shadowBlur: 10,
                     shadowOffsetX: 8,
