@@ -384,7 +384,7 @@ require(
                 // },
                 lineStyle: { // 系列级个性化折线样式，横向渐变描边
                     width: 2,
-                    color: '#003399',
+                    color: '#0078fe',
                     shadowColor: 'rgba(0,0,0,0.5)',
                     shadowBlur: 10,
                     shadowOffsetX: 8,
@@ -415,7 +415,7 @@ require(
                 // },
                 lineStyle: { // 系列级个性化折线样式，横向渐变描边
                     width: 2,
-                    color: '#460505',
+                    color: '#fd2b2b',
                     shadowColor: 'rgba(0,0,0,0.5)',
                     shadowBlur: 10,
                     shadowOffsetX: 8,
