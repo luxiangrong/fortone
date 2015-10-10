@@ -24,66 +24,71 @@
     <![endif]-->
     <div class="container">
         <h1 class="page-title">
-            <img src="images/pic01.png" height="20" width="168" alt="">
+            <img src="images/pic01.png" alt="">
             <p>历史绩效图</p>
+            <a href="javascript:void(0)" class="arraw arraw-prev"></a>
+            <a href="javascript:void(0)" class="arraw arraw-next"></a>
         </h1>
-        <div class="row clearfix l-b">
-            <div class="col-3 col-jingzhi">
-                <div class="l1">
-                    <strong class="r-b">今日净值</strong>
-                    <span class="date">2015-3-16</span>
-                </div>
-                <div class="l2">
-                    <img src="images/pic03.png" height="33" width="39" alt="">
-                    <span class="jingzhi">15.7575</span>
-                </div>
-            </div>
-            <div class="col-9 col-normal">
-                <div class="col-4 l-b ">
+        <div class="row clearfix">
+            <div class="table-wrap">
+                <div class="col-3 col-jingzhi">
                     <div class="l1">
-                        <strong>当年收益：</strong>
-                        <span>46.39%</span>
+                        <strong class="r-b">今日净值</strong>
+                        <span class="date">2015-3-16</span>
                     </div>
                     <div class="l2">
-                        <strong>近一年最大回撤：</strong>
-                        <span>-11.56%</span>
+                        <img class="icon-jingzhi" src="images/pic03.png" alt="">
+                        <span class="jingzhi">15.7575</span>
                     </div>
                 </div>
-                <div class="col-4 l-b ">
-                    <div class="l1">
-                        <strong>当月收益：</strong>
-                        <span>-0.17</span>
+                <div class="col-9 col-normal">
+                    <div class="col-4 l-b ">
+                        <div class="l1">
+                            <strong>当年收益：</strong>
+                            <span>46.39%</span>
+                        </div>
+                        <div class="l2">
+                            <strong>近一年最大回撤：</strong>
+                            <span>-11.56%</span>
+                        </div>
                     </div>
-                    <div class="l2">
-                        <strong>总收益：</strong>
-                        <span>1475.75%</span>
+                    <div class="col-4 l-b ">
+                        <div class="l1">
+                            <strong>当月收益：</strong>
+                            <span>-0.17</span>
+                        </div>
+                        <div class="l2">
+                            <strong>总收益：</strong>
+                            <span>1475.75%</span>
+                        </div>
+                    </div>
+                    <div class="col-4 l-b ">
+                        <div class="l1">
+                            <strong>当日收益：</strong>
+                            <span>1.42%</span>
+                        </div>
+                        <div class="l2">
+                            <strong>夏普比率：</strong>
+                            <span>1.7534</span>
+                        </div>
                     </div>
                 </div>
-                <div class="col-4 l-b ">
-                    <div class="l1">
-                        <strong>当日收益：</strong>
-                        <span>1.42%</span>
-                    </div>
-                    <div class="l2">
-                        <strong>夏普比率：</strong>
-                        <span>1.7534</span>
-                    </div>
+                <div class="clearfix"></div>
+                <div class="hr-1"></div>
+                <div class="hr-2"></div>
+                <div class="clearfix border"></div>
+                <div class="tools">
+                    <span>显示：</span>
+                    <label><input type="radio" value="week" name="range" /><span>一周</span></label>
+                    <label><input type="radio" value="month" name="range" checked="checked" /><span>一个月</span></label>
+                    <label><input type="radio" value="year" name="range" /><span>一年</span></label>
+                    <label><input type="radio" value="all" name="range" /><span>全部</span></label>
+                    <span class="l-b">对比：</span>
+                    <label><input type="checkbox" name="duibi" value="shangzheng"/><span>上证指数</span></label>
+                    <label><input type="checkbox" name="duibi" value="biaopu"/><span>标普500指数</span></label>
+                    <span class="l-b">显示区间：<span class="range-start">2015-02-09</span> 至 <span class="range-end">2015-03-16</span></span>
                 </div>
-            </div>
-            <div class="clearfix"></div>
-            <div class="hr-1"></div>
-            <div class="hr-2"></div>
-            <div class="clearfix"></div>
-            <div class="tools">
-                <span>显示：</span>
-                <label><input type="radio" value="week" name="range" /><span>一周</span></label>
-                <label><input type="radio" value="month" name="range" checked="checked" /><span>一个月</span></label>
-                <label><input type="radio" value="year" name="range" /><span>一年</span></label>
-                <label><input type="radio" value="all" name="range" /><span>全部</span></label>
-                <span class="l-b">对比：</span>
-                <label><input type="checkbox" name="duibi" value="shangzheng"/><span>上证指数</span></label>
-                <label><input type="checkbox" name="duibi" value="biaopu"/><span>标普500指数</span></label>
-                <span class="l-b">显示区间：<span class="range-start">2015-02-09</span> 至 <span class="range-end">2015-03-16</span></span>
+                <div class="clearfix border"></div>
             </div>
             <div class="tooltip">
                 <span class="date">2015-03-16</span>

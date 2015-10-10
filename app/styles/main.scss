@@ -10,15 +10,16 @@
 }
 
 body {
-    background: #fafafa;
+    background: #fafafa url(../images/bg01.jpg) no-repeat;
+    background-size: cover;
     font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Hiragino Sans GB W3", "Microsoft YaHei", Arial, sans-serif;
-    color: #353535;
+    color: rgba(255,255,255,0.7);
     background-color: #eeeeee;
     font-size: 14px;
+    min-height: 100%
 }
 
 .chart-wrap {
-    background: url(../images/chart_bg.png) no-repeat center center;
 }
 
 #main-chart {
@@ -35,8 +36,29 @@ body {
 h1.page-title {
     text-align: center;
     font-weight: normal;
+    position: relative;
     p {
-        font-size: 23px;
+        font-size: 32px;
+        color: #ffffff;
+        margin-top: 0px;
+    }
+    .arraw {
+        position: absolute;
+        bottom: 0px;
+        width: 40px;
+        height: 45px;
+        opacity: 0.8;
+        &:hover {
+            opacity: 1;
+        }
+        &.arraw-prev {
+            background:transparent url('../images/pic06.png') left top no-repeat;
+            left: 0px;
+        }
+        &.arraw-next {
+            background:transparent url('../images/pic07.png') left top no-repeat;
+            right: 0px;
+        }
     }
 }
 
@@ -50,8 +72,8 @@ h1.page-title {
 }
 
 .l-b {
-    border-left: 1px solid #dcdcdc;
-    padding-left: 10px;
+    padding-left: 20px;
+    background: url(../images/bg02.png) repeat-y left top;
 }
 
 .b-b {
@@ -66,6 +88,11 @@ h1.page-title {
     }
     &:after {
         clear: both;
+    }
+    .border {
+        background: url(../images/bg03.png) repeat-x left bottom;
+        padding-bottom: 5px;
+        margin-left: 2%;
     }
 }
 
@@ -92,6 +119,10 @@ h1.page-title {
     width: 33.333%;
 }
 
+.icon-jingzhi {
+    margin-top: 3px;
+}
+
 .col-jingzhi {
     padding-left: 20px;
     padding-right: 20px;
@@ -99,11 +130,11 @@ h1.page-title {
         margin-right: 20px;
     }
     .date {
-        color: #767676;
+        // color: #767676;
     }
     .jingzhi {
         font-size: 28px;
-        color: #99cc33;
+        color: #e60010;
         margin-left: 30px;
     }
     .l1 {
@@ -114,45 +145,49 @@ h1.page-title {
     }
     strong {
         font-weight: normal;
-        color: #000;
+        // color: #000;
     }
     span {
-        color: #767676;
+        // color: #767676;
     }
 }
 
 .col-normal {
     strong {
         font-weight: normal;
-        color: #000;
+        // color: #000;
     }
     span {
-        color: #767676;
+        // color: #767676;
     }
 }
 
 .hr-1 {
-    margin: 0 20px;
-    border-bottom: 1px solid #dcdcdc;
-    width: 20%;
-    margin-top: 20px;
+    border-bottom: 1px solid #8b8b8d;
+    width: 26%;
+    margin-top: 15px;
     float: left;
+    margin-left: 2%;
+    margin-right: 2%;
 }
 
 .hr-2 {
-    margin: 0 20px;
-    border-bottom: 1px solid #dcdcdc;
-    width: 70%;
-    margin-top: 20px;
+    border-bottom: 1px solid #8b8b8d;
+    width: 68%;
+    margin-top: 15px;
     float: left;
+    margin-left: 2%;
+}
+
+.table-wrap {
+    background: url(../images/bg04.png) repeat-y left top;
 }
 
 .tools {
     border-bottom: 1px solid #dcdcdc;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 10px;
-    margin-right: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-left: 2%;
     span {
         position: relative;
         top: 1px;
@@ -206,6 +241,9 @@ h1.page-title {
         }
     }
 }
+
+
+
 /* iCheck plugin Polaris skin
 ----------------------------------- */
 

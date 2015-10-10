@@ -17,6 +17,7 @@ require(
 
         var currentMonth = '';
         var option = {
+            backgroundColor: 'rgba(0,0,0,0)',
             tooltip: {
                 trigger: 'axis',
                 showDelay: 0,
@@ -261,7 +262,7 @@ require(
                                 var zrColor = require('zrender/tool/color');
                                 return zrColor.getRadialGradient(442, 0, 100, 442, 50, 360, [
                                     [0, 'rgba(126,154,167,0.75)'],
-                                    [1, 'rgba(60,62,69,0)']
+                                    [1, 'rgba(160,62,69,0)']
                                 ])
                             })()
                         },
