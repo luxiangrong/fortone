@@ -34,18 +34,18 @@
                 <div class="col-3 col-jingzhi">
                     <div class="l1">
                         <strong class="r-b">今日净值</strong>
-                        <span class="date">2015-3-16</span>
+                        <span class="date" id="date-today"></span>
                     </div>
                     <div class="l2">
                         <img class="icon-jingzhi" src="images/pic03.png" alt="">
-                        <span class="jingzhi">15.7575</span>
+                        <span class="jingzhi" id="data-jingzhi"></span>
                     </div>
                 </div>
                 <div class="col-9 col-normal">
                     <div class="col-4 l-b ">
                         <div class="l1">
                             <strong>当年收益：</strong>
-                            <span>46.39%</span>
+                            <span id="data-dangnianshouyi"></span>
                         </div>
                         <div class="l2">
                             <strong>近一年最大回撤：</strong>
@@ -55,17 +55,17 @@
                     <div class="col-4 l-b ">
                         <div class="l1">
                             <strong>当月收益：</strong>
-                            <span>-0.17</span>
+                            <span id="data-dangyueshouyi"></span>
                         </div>
                         <div class="l2">
                             <strong>总收益：</strong>
-                            <span>1475.75%</span>
+                            <span id="data-zongshouyi"></span>
                         </div>
                     </div>
                     <div class="col-4 l-b ">
                         <div class="l1">
                             <strong>当日收益：</strong>
-                            <span>1.42%</span>
+                            <span id="data-dangrishouyi"></span>
                         </div>
                         <div class="l2">
                             <strong>夏普比率：</strong>
@@ -107,7 +107,7 @@
     <!-- bower:js -->
     <script src="bower_components/modernizr/modernizr.js"></script>
     <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/echarts/build/dist/echarts.js"></script>
+    <script src="bower_components/echarts/build/source/echarts.js"></script>
     <script src="bower_components/iCheck/icheck.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->

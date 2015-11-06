@@ -1,3 +1,10 @@
+(function($){
+    $(document).ready(function(){
+        var now = new Date();
+        $('#date-today').text(now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDay() ) ;
+    });
+})(jQuery);
+
 require.config({
     paths: {
         echarts: 'bower_components/echarts/build/source'
@@ -437,7 +444,8 @@ require(
             serieData1 = {},
             serieData2 = {},
             serieData3 = {},
-            stoped = {};
+            stoped = {},
+            allData = {};
 
         var currentData = new Date();
         currentYear = Number(currentData.getFullYear());
@@ -447,6 +455,7 @@ require(
             serieData2[i] = [];
             serieData3[i] = [];
             xAxisData[i] = [];
+            allData[i] = [];
             stoped[i] = 0;
             (function(i) {
                 $.getJSON(i + '.html', function(data) {
@@ -456,6 +465,7 @@ require(
                         serieData1[i].push(Number(item[1]).toFixed(4));
                         serieData2[i].push(Number(item[5]).toFixed(2));
                         serieData3[i].push(Number(item[7]).toFixed(2));
+                        allData[i].push(item);
                     });
 
                 });
@@ -465,7 +475,8 @@ require(
         var datax = [],
             data1 = [],
             data2 = [],
-            data3 = [];
+            data3 = [],
+            dataAll = [];
             
         var handler = window.setInterval(function() {
             var total = 0;
@@ -482,12 +493,14 @@ require(
                     data1 = data1.concat(serieData1[index]);
                     data2 = data2.concat(serieData2[index]);
                     data3 = data3.concat(serieData3[index]);
+                    dataAll = dataAll.concat(allData[index]);
                 }
 
                 datax = datax.reverse();
                 data1 = data1.reverse();
                 data2 = data2.reverse();
                 data3 = data3.reverse();
+                dataAll = dataAll.reverse();
 
                 $.each(datax, function(i, data){
                     option.xAxis[0].data.push(data);
@@ -503,8 +516,46 @@ require(
                 resetOption();
 
                 renderExtra();
+
+                $('#date-today').text(datax[datax.length - 1]) ;
+                $('#data-jingzhi').text(data1[data1.length - 1]);
+                $('#data-dangrishouyi').text((((data1[data1.length - 1] / data1[data1.length - 2]) - 1) *100).toFixed(2) + '%');
+                $('#data-dangyueshouyi').text((((data1[data1.length - 1] / getEndDayOfLastMonth(allData)[1]) - 1) *100).toFixed(2) + '%');
+                $('#data-dangnianshouyi').text((((data1[data1.length - 1] / getEndDayOfLastYear(allData)[1]) - 1) *100).toFixed(2) + '%');
+                $('#data-zongshouyi').text((((data1[data1.length - 1] / data1[0]) - 1) *100).toFixed(2) + '%');
+                console.log(getEndDayOfLastYear(allData));
             }
         }, 1000);
+
+        function getEndDayOfLastMonth(data) {
+            var now = new Date();
+            var year = now.getFullYear();
+            var month = now.getMonth() + 1;
+            var day = now.getDate();
+            if(month == 1) {
+                var yearData = data[year-1];
+                for(var i = 0; i < yearData.length; i ++) {
+                    if(yearData[i][0].indexOf('12') == 0) {
+                        return yearData[i];
+                    }
+                }
+            } else {
+                var yearData = data[year];
+                for(var i = 0; i < yearData.length; i ++) {
+                    if(yearData[i][0].indexOf('10') == 0) {
+                        return yearData[i];
+                    }
+                }
+                
+            }
+        }
+
+        function getEndDayOfLastYear(data) {
+            var now = new Date();
+            var year = now.getFullYear();
+            var yearData = data[year-1];
+            return yearData[0];
+        }
 
         function renderExtra() {
             var zr = myChart.getZrender();
