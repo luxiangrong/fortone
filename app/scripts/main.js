@@ -523,7 +523,6 @@ require(
                 $('#data-dangyueshouyi').text((((data1[data1.length - 1] / getEndDayOfLastMonth(allData)[1]) - 1) *100).toFixed(2) + '%');
                 $('#data-dangnianshouyi').text((((data1[data1.length - 1] / getEndDayOfLastYear(allData)[1]) - 1) *100).toFixed(2) + '%');
                 $('#data-zongshouyi').text((((data1[data1.length - 1] / data1[0]) - 1) *100).toFixed(2) + '%');
-                console.log(getEndDayOfLastYear(allData));
             }
         }, 1000);
 
