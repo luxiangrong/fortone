@@ -590,22 +590,26 @@ require(
             var range = $(this).val();
             switch (range) {
                 case 'week':
-                    option.dataZoom.start = (1 - 7 / option.series[0].data.length) * 100;
+                    option.dataZoom.start = option.dataZoom.end - 7 / option.series[0].data.length * 100;
+                    // option.dataZoom.end = 100;
                     myChart.clear();
                     myChart.setOption(option);
                     break;
                 case 'month':
-                    option.dataZoom.start = (1 - 22 / option.series[0].data.length) * 100;
+                    option.dataZoom.start = option.dataZoom.end - 22 / option.series[0].data.length * 100;
+                    // option.dataZoom.end = 100;
                     myChart.clear();
                     myChart.setOption(option);
                     break;
                 case 'year':
-                    option.dataZoom.start = (1 - 260 / option.series[0].data.length) * 100;
+                    option.dataZoom.start = option.dataZoom.end - 260 / option.series[0].data.length * 100;
+                    // option.dataZoom.end = 100;
                     myChart.clear();
                     myChart.setOption(option);
                     break;
                 case 'all':
                     option.dataZoom.start = 0;
+                    option.dataZoom.end = 100;
                     myChart.clear();
                     myChart.setOption(option);
                     break;
