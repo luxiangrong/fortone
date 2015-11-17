@@ -614,6 +614,9 @@ require(
                     myChart.setOption(option);
                     break;
             }
+            var xAxisData = myChart._option.xAxis[0].data;
+            $('.range-start').text(xAxisData[0]);
+            $('.range-end').text(xAxisData[xAxisData.length - 1]);
             resetOption();
         });
 
@@ -765,6 +768,13 @@ require(
 
             renderExtra();
         });
+
+        myChart.on(ecConfig.EVENT.REFRESH, function(a,chart){
+            var xAxisData = chart._option.xAxis[0].data;
+            $('.range-start').text(xAxisData[0]);
+            $('.range-end').text(xAxisData[xAxisData.length - 1]);
+            console.log(xAxisData[0]);
+        })
 
 
     }
