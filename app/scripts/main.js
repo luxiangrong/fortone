@@ -509,6 +509,8 @@ require(
                     option.series[0].data.push(data);
                 });
 
+
+
                 myChart.hideLoading();
                 option.dataZoom.start = (1 - 22 / option.series[0].data.length) * 100;
                 myChart.setOption(option);
@@ -517,14 +519,28 @@ require(
 
                 renderExtra();
 
+                var shouyi = [];
+                for(var i2 = 0; i2 < dataAll.length; i2 ++) {
+                    shouyi.push(Number(dataAll[i2][1]));
+                }
+                var huice = [];
+                for(var i3 = 0; i3 < shouyi.length; i3 ++) {
+                    huice.push(shouyi[i3]/Math.max.apply(Math, shouyi.slice(0, i3 + 1)) - 1);
+                }
+                
+
                 $('#date-today').text(datax[datax.length - 1]) ;
                 $('#data-jingzhi').text(data1[data1.length - 1]);
                 $('#data-dangrishouyi').text((((data1[data1.length - 1] / data1[data1.length - 2]) - 1) *100).toFixed(2) + '%');
                 $('#data-dangyueshouyi').text((((data1[data1.length - 1] / getEndDayOfLastMonth(allData)[1]) - 1) *100).toFixed(2) + '%');
                 $('#data-dangnianshouyi').text((((data1[data1.length - 1] / getEndDayOfLastYear(allData)[1]) - 1) *100).toFixed(2) + '%');
                 $('#data-zongshouyi').text((((data1[data1.length - 1] / data1[0]) - 1) *100).toFixed(2) + '%');
+                $('#data-zuidahuicelastyear').text((Math.min.apply(Math, huice.slice(huice.length-250, huice.length)) * 100).toFixed(2) + '%');
             }
         }, 1000);
+
+        // var max_of_array = Math.max.apply(Math, array);
+        // var min_of_array = Math.min.apply(Math, array);
 
         function getEndDayOfLastMonth(data) {
             var now = new Date();
