@@ -458,7 +458,7 @@ require(
             allData[i] = [];
             stoped[i] = 0;
             (function(i) {
-                $.getJSON(i + '.html', function(data) {
+                $.getJSON(dataPrefix + i + '.html', function(data) {
                     stoped[i] = 1;
                     $.each(data.sktq, function(i2, item) {
                         xAxisData[i].push(i + '-' + item[0]);
@@ -557,7 +557,7 @@ require(
             } else {
                 var yearData = data[year];
                 for(var i = 0; i < yearData.length; i ++) {
-                    if(yearData[i][0].indexOf('10') == 0) {
+                    if(yearData[i][0].indexOf(month-1) == 0) {
                         return yearData[i];
                     }
                 }
