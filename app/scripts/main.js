@@ -1,7 +1,7 @@
-(function($){
-    $(document).ready(function(){
+(function($) {
+    $(document).ready(function() {
         var now = new Date();
-        $('#date-today').text(now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDay() ) ;
+        $('#date-today').text(now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDay());
     });
 })(jQuery);
 
@@ -50,7 +50,7 @@ require(
                                     } else {
                                         var lastVal = Number(param.series.data[currentIndex - 1]);
                                     }
-                                    $('.tooltip .jingzhi').text('净值：' + currentVal + '（ ' + ((currentVal - lastVal) / lastVal * 100).toFixed(2) + '% ）');
+                                    $('.tooltip .jingzhi').text('周净值：' + currentVal + '（ ' + ((currentVal - lastVal) / lastVal * 100).toFixed(2) + '% ）');
                                     break;
                             }
                         });
@@ -460,12 +460,20 @@ require(
             (function(i) {
                 $.getJSON(dataPrefix + i + '.html', function(data) {
                     stoped[i] = 1;
+                    var date = new Date();
+                    date.setFullYear(i);
                     $.each(data.sktq, function(i2, item) {
-                        xAxisData[i].push(i + '-' + item[0]);
-                        serieData1[i].push(Number(item[1]).toFixed(4));
-                        serieData2[i].push(Number(item[5]).toFixed(2));
-                        serieData3[i].push(Number(item[7]).toFixed(2));
-                        allData[i].push(item);
+                        var monthAndDate = item[0].split('-');
+                        // console.log(monthAndDate);
+                        date.setMonth(parseInt(monthAndDate[0]) - 1);
+                        date.setDate(parseInt(monthAndDate[1]));
+                        if(date.getUTCDay() == 5) {
+                            xAxisData[i].push(i + '-' + item[0]);
+                            serieData1[i].push(Number(item[1]).toFixed(4));
+                            serieData2[i].push(Number(item[5]).toFixed(2));
+                            serieData3[i].push(Number(item[7]).toFixed(2));
+                            allData[i].push(item);
+                        }
                     });
 
                 });
@@ -477,7 +485,7 @@ require(
             data2 = [],
             data3 = [],
             dataAll = [];
-            
+
         var handler = window.setInterval(function() {
             var total = 0;
             $.each(stoped, function(i, item) {
@@ -502,10 +510,10 @@ require(
                 data3 = data3.reverse();
                 dataAll = dataAll.reverse();
 
-                $.each(datax, function(i, data){
+                $.each(datax, function(i, data) {
                     option.xAxis[0].data.push(data);
                 });
-                $.each(data1, function(i, data){
+                $.each(data1, function(i, data) {
                     option.series[0].data.push(data);
                 });
 
@@ -520,55 +528,58 @@ require(
                 renderExtra();
 
                 var shouyi = [];
-                for(var i2 = 0; i2 < dataAll.length; i2 ++) {
+                for (var i2 = 0; i2 < dataAll.length; i2++) {
                     shouyi.push(Number(dataAll[i2][1]));
                 }
                 var huice = [];
-                for(var i3 = 0; i3 < shouyi.length; i3 ++) {
-                    huice.push(shouyi[i3]/Math.max.apply(Math, shouyi.slice(0, i3 + 1)) - 1);
+                for (var i3 = 0; i3 < shouyi.length; i3++) {
+                    huice.push(shouyi[i3] / Math.max.apply(Math, shouyi.slice(0, i3 + 1)) - 1);
                 }
-                
 
-                $('#date-today').text(datax[datax.length - 1]) ;
+                $('#date-today').text(datax[datax.length - 1]);
                 $('#data-jingzhi').text(data1[data1.length - 1]);
-                $('#data-dangrishouyi').text((((data1[data1.length - 1] / data1[data1.length - 2]) - 1) *100).toFixed(2) + '%');
-                $('#data-dangyueshouyi').text((((data1[data1.length - 1] / getEndDayOfLastMonth(allData)[1]) - 1) *100).toFixed(2) + '%');
-                $('#data-dangnianshouyi').text((((data1[data1.length - 1] / getEndDayOfLastYear(allData)[1]) - 1) *100).toFixed(2) + '%');
-                $('#data-zongshouyi').text((((data1[data1.length - 1] / data1[0]) - 1) *100).toFixed(2) + '%');
-                $('#data-zuidahuicelastyear').text((Math.min.apply(Math, huice.slice(huice.length-250, huice.length)) * 100).toFixed(2) + '%');
+                $('#data-dangrishouyi').text((((data1[data1.length - 1] / data1[data1.length - 2]) - 1) * 100).toFixed(2) + '%');
+                $('#data-dangyueshouyi').text((((data1[data1.length - 1] / getEndDayOfLastMonth(allData)[1]) - 1) * 100).toFixed(2) + '%');
+                $('#data-dangnianshouyi').text((((data1[data1.length - 1] / getEndDayOfLastYear(allData)[1]) - 1) * 100).toFixed(2) + '%');
+                $('#data-zongshouyi').text((((data1[data1.length - 1] / data1[0]) - 1) * 100).toFixed(2) + '%');
+                $('#data-zuidahuicelastyear').text((Math.min.apply(Math, huice.slice(huice.length - 250, huice.length)) * 100).toFixed(2) + '%');
             }
         }, 1000);
 
         // var max_of_array = Math.max.apply(Math, array);
         // var min_of_array = Math.min.apply(Math, array);
 
+        function addZero(str, length) {
+            return new Array(length - (str + '').length + 1).join("0") + str;
+        }
+
         function getEndDayOfLastMonth(data) {
             var now = new Date();
             var year = now.getFullYear();
             var month = now.getMonth() + 1;
             var day = now.getDate();
-            if(month == 1) {
-                var yearData = data[year-1];
-                for(var i = 0; i < yearData.length; i ++) {
-                    if(yearData[i][0].indexOf('12') == 0) {
+            if (month == 1) {
+                var yearData = data[year - 1];
+                for (var i = 0; i < yearData.length; i++) {
+                    if (yearData[i][0].indexOf('12') == 0) {
                         return yearData[i];
                     }
                 }
             } else {
                 var yearData = data[year];
-                for(var i = 0; i < yearData.length; i ++) {
-                    if(yearData[i][0].indexOf(month-1) == 0) {
+                for (var i = 0; i < yearData.length; i++) {
+                    if (yearData[i][0].indexOf(addZero(month-1, 2)) == 0) {
                         return yearData[i];
                     }
                 }
-                
+
             }
         }
 
         function getEndDayOfLastYear(data) {
             var now = new Date();
             var year = now.getFullYear();
-            var yearData = data[year-1];
+            var yearData = data[year - 1];
             return yearData[0];
         }
 
@@ -785,7 +796,7 @@ require(
             renderExtra();
         });
 
-        myChart.on(ecConfig.EVENT.REFRESH, function(a,chart){
+        myChart.on(ecConfig.EVENT.REFRESH, function(a, chart) {
             var xAxisData = chart._option.xAxis[0].data;
             $('.range-start').text(xAxisData[0]);
             $('.range-end').text(xAxisData[xAxisData.length - 1]);
